@@ -5,7 +5,12 @@ import PropTypes from 'prop-types';
 
 const MaterialSearch = (props) => {
   const [value, setValue] = useState(0);
+  const [textTest, setTextTest] = useState("Initial text")
   const { materials, handleSelectMaterial, handleMaterialReset } = props;
+
+  const changeTestState = () => {
+    setTextTest("Jason")
+  }
 
   return (
     <React.Fragment>
@@ -39,7 +44,7 @@ const MaterialSearch = (props) => {
         </div>
         <Button
           onClick={() => {
-            setValue(0);
+            setValue(1);
             handleMaterialReset(true);
           }}
           style={{
@@ -50,15 +55,26 @@ const MaterialSearch = (props) => {
         >
           Reset
         </Button>
+        <p>{textTest}</p>
+        <Button
+          onClick={changeTestState}
+          style={{
+            backgroundColor: `#13d558`,
+            color: `white`,
+            fontSize: `1.4rem`
+          }}
+        >
+           Material Check
+        </Button>
       </div>
     </React.Fragment>
   );
 };
 
 MaterialSearch.propTypes = {
-  materials: PropTypes.array.isRequired,
-  handleSelectMaterial: PropTypes.func.isRequired,
-  handleMaterialReset: PropTypes.func.isRequired,
+  materials: PropTypes.array,
+  handleSelectMaterial: PropTypes.func,
+  handleMaterialReset: PropTypes.func,
 };
 
 export default MaterialSearch;

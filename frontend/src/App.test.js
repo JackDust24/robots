@@ -12,7 +12,7 @@ it("renders without crashing", () => {
 describe("App - React components", () => {
   it("renders Account header", () => {
     const wrapper = shallow(<App />);
-    const welcome = <h3>Buy Your Favourite Robot</h3>;
+    const welcome = <h3>Choose Your Favourite Robot</h3>;
     expect(wrapper.contains(welcome)).toEqual(true);
   });
   it("contains a header component", () => {

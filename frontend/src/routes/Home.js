@@ -37,6 +37,7 @@ export default function Home() {
       // Add UniqueID to the data
       const formattedData = await addUniqueIdToTheData(jsonObj);
       const data = formattedData.data;
+      console.log("jsonObj Data, ", jsonObj)
       // Retrieve the materials
       const listOfMaterials = await collectAllMaterials(data);
       setRobotData(data);
