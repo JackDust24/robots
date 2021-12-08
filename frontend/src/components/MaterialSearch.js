@@ -1,16 +1,11 @@
 import { Button, Form, InputGroup } from "react-bootstrap";
 import React, { useState } from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const MaterialSearch = (props) => {
   const [value, setValue] = useState(0);
-  const [textTest, setTextTest] = useState("Initial text")
   const { materials, handleSelectMaterial, handleMaterialReset } = props;
-
-  const changeTestState = () => {
-    setTextTest("Jason")
-  }
 
   return (
     <React.Fragment>
@@ -50,21 +45,10 @@ const MaterialSearch = (props) => {
           style={{
             backgroundColor: `#13d558`,
             color: `white`,
-            fontSize: `1.4rem`
+            fontSize: `1.4rem`,
           }}
         >
           Reset
-        </Button>
-        <p>{textTest}</p>
-        <Button
-          onClick={changeTestState}
-          style={{
-            backgroundColor: `#13d558`,
-            color: `white`,
-            fontSize: `1.4rem`
-          }}
-        >
-           Material Check
         </Button>
       </div>
     </React.Fragment>

@@ -1,6 +1,6 @@
 import { mount, shallow } from "enzyme";
 
-import App from "./App";
+import App from "./App.tsx";
 import Header from "./components/Header";
 import Home from "./routes/Home";
 import React from "react";

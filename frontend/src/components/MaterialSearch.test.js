@@ -6,15 +6,15 @@ import React from 'react';
 
 afterEach(cleanup)
 
-it('Update text value when button clicked', () => {
-    const { getByText } = render(<MaterialSearch />);
+// it('Update text value when button clicked', () => {
+//     const { getByText } = render(<MaterialSearch />);
 
-    expect(getByText(/Initial/i).textContent).toBe("Initial text")
+//     expect(getByText(/Initial/i).textContent).toBe("Initial text")
 
-    fireEvent.click(getByText("Material Check"))
+//     fireEvent.click(getByText("Material Check"))
 
-    expect(getByText(/Jason/).textContent).toBe("Jason")
- })
+//     expect(getByText(/Jason/).textContent).toBe("Jason")
+//  })
 
 
 //  it('Update text value when when button clicked', () => {

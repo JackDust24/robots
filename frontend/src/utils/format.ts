@@ -5,7 +5,7 @@
 import React from "react";
 
 // format price to THB
-export const formatPrice = (price) => {
+export const formatPrice = (price: string) => {
   if (!price) {
     return "No Payment";
   }
@@ -17,7 +17,7 @@ export const formatPrice = (price) => {
 };
 
 // format date to DD/MM/YY
-export const formatDate = (createdDate) => {
+export const formatDate = (createdDate: string) => {
   const date = new Date(createdDate);
   const formattedDate = `${date.getDate()}-${
     date.getMonth() + 1
@@ -26,7 +26,7 @@ export const formatDate = (createdDate) => {
 };
 
 // Count number of robots
-export const countNumberOfRobots = (cart) => {
+export const countNumberOfRobots = (cart: any[]) => {
   const numberOfRobots = cart.reduce((robotTotal, robot) => {
     return robot.stock + robotTotal;
   }, 0); 
@@ -34,7 +34,7 @@ export const countNumberOfRobots = (cart) => {
 }
 
 // Work out total price in cart
-export const countTotalPrice = (cart) => {
+export const countTotalPrice = (cart: any[]) => {
   const totalPrice = cart.reduce((robotTotal, robot) => {
     return parseInt(robot.price) * robot.stock + robotTotal;
   }, 0); 

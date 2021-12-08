@@ -36,10 +36,13 @@ export default function Home() {
       const jsonObj = await callAPI();
       // Add UniqueID to the data
       const formattedData = await addUniqueIdToTheData(jsonObj);
-      const data = formattedData.data;
+      const listOfMaterials = await collectAllMaterials(jsonObj);
+
+      const data = formattedData;
       console.log("jsonObj Data, ", jsonObj)
+      console.log("data Data, ", data)
+
       // Retrieve the materials
-      const listOfMaterials = await collectAllMaterials(data);
       setRobotData(data);
       setMaterials(listOfMaterials);
       // Set initial Current Robots per page
