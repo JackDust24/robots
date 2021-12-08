@@ -1,11 +1,22 @@
 import { Button, Card, Col } from "react-bootstrap";
-import { formatDate, formatPrice } from "./../utils/format";
+import { formatDate, formatPrice } from "../utils/format";
 
+import CSS from 'csstype';
 import NoImage from "../assets/images/noimage.png";
 import PropTypes from 'prop-types';
 import React from "react";
 
-const ImageStyles = {
+type Robot = {
+  name: string;
+  price: string;
+  image: string;
+  material: string;
+  createdAt: string;
+  stock: number;
+  id: number;
+}
+
+const ImageStyles: CSS.Properties = {
   width: `80%`,
   objectFit: "fill",
   height: `150px`,
@@ -15,46 +26,46 @@ const ImageStyles = {
 
 };
 
-const CardBodyTextStyle = {
+const CardBodyTextStyle: CSS.Properties = {
   width: `100%`,
 };
 
-const CardBodyMaterialStyle = {
+const CardBodyMaterialStyle: CSS.Properties = {
   fontSize: `0.9rem`,
   color: `blue`,
   marginBottom: `5px`,
 };
 
-const CardBodyPriceStyle = {
+const CardBodyPriceStyle: CSS.Properties = {
   fontWeight: `Bold`,
   color: `black`,
   fontSize: `1.0rem`,
   marginBottom: `5px`,
 };
 
-const CardBodyDateStyle = {
+const CardBodyDateStyle: CSS.Properties = {
   fontSize: `0.7rem`,
   color: `black`,
   marginBottom: `5px`,
 };
 
-const CardBodyStockStyle = {
+const CardBodyStockStyle: CSS.Properties = {
   fontSize: `0.8rem`,
   marginBottom: `5px`,
 };
 
-const CardButtonStyle = {
+const CardButtonStyle: CSS.Properties = {
   width: `70%`,
   marginLeft: `15%`,
   marginRight: `15%`,
   maxWidth: `240px`,
 };
 
-const CardBodyStyle = {
+const CardBodyStyle: CSS.Properties = {
   height: `160px`,
 };
 
-const RobotItem = (props) => {
+const RobotItem: React.FC<{ robot: Robot; handleAddToCart: (robot: Robot) => void }> = (props) => {
   const { robot, handleAddToCart } = props;
 
   return (
@@ -73,26 +84,26 @@ const RobotItem = (props) => {
             <Card.Title>{robot.name}</Card.Title>
             <Card.Text
               className="wrap-text"
-              style={(CardBodyTextStyle, CardBodyMaterialStyle)}
+              style={(CardBodyMaterialStyle)}
             >
               Material: {robot.material}
             </Card.Text>
             <Card.Text
               className="wrap-text text-center"
-              style={(CardBodyTextStyle, CardBodyPriceStyle)}
+              style={(CardBodyPriceStyle)}
             >
               Price: {formatPrice(robot.price)}
             </Card.Text>
 
             <Card.Text
               className="wrap-text"
-              style={(CardBodyTextStyle, CardBodyStockStyle)}
+              style={(CardBodyStockStyle)}
             >
               Items in Stock: {robot.stock ? `${robot.stock}` : `Out Of Stock`}
             </Card.Text>
             <Card.Text
               className="wrap-text text-muted"
-              style={(CardBodyTextStyle, CardBodyDateStyle)}
+              style={(CardBodyDateStyle)}
             >
               Robot created: {formatDate(robot.createdAt)}
             </Card.Text>
@@ -112,9 +123,9 @@ const RobotItem = (props) => {
   );
 };
 
-RobotItem.propTypes = {
-  robot: PropTypes.object.isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
-};
+// RobotItem.propTypes = {
+//   robot: PropTypes.object.isRequired,
+//   handleAddToCart: PropTypes.func.isRequired,
+// };
 
 export default RobotItem;

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import Header from "./components/Header";
-import Home from "./routes/Home";
+import NewHome from "./routes/NewHome";
 
 function App() {
   return (
@@ -18,7 +18,8 @@ function App() {
         <h3>Choose Your Favourite Robot</h3>
         <h5 style={{ padding: `8px`, color: `red` }}>While Stocks last!</h5>
       </div>
-      <Home />
+      {/* <Home /> */}
+      <NewHome />
     </div>
   );
 }

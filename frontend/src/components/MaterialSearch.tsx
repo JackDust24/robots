@@ -3,8 +3,8 @@ import React, { useState } from "react";
 
 import PropTypes from "prop-types";
 
-const MaterialSearch = (props) => {
-  const [value, setValue] = useState(0);
+const MaterialSearch: React.FC<{ materials: string[]; handleSelectMaterial: (material: string) => void; handleMaterialReset: (isReset: boolean) => void }> = (props) => {
+  const [value, setValue] = useState<string>("0");
   const { materials, handleSelectMaterial, handleMaterialReset } = props;
 
   return (
@@ -39,7 +39,7 @@ const MaterialSearch = (props) => {
         </div>
         <Button
           onClick={() => {
-            setValue(1);
+            setValue("0");
             handleMaterialReset(true);
           }}
           style={{
@@ -55,10 +55,10 @@ const MaterialSearch = (props) => {
   );
 };
 
-MaterialSearch.propTypes = {
-  materials: PropTypes.array,
-  handleSelectMaterial: PropTypes.func,
-  handleMaterialReset: PropTypes.func,
-};
+// MaterialSearch.propTypes = {
+//   materials: PropTypes.array,
+//   handleSelectMaterial: PropTypes.func,
+//   handleMaterialReset: PropTypes.func,
+// };
 
 export default MaterialSearch;
