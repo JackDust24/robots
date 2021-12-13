@@ -1,6 +1,6 @@
-import React from 'react';
+// import { interface } from "os";
 
-type Robot = {
+export interface RobotType {
     name: string;
     price: string;
     image: string;
@@ -8,4 +8,8 @@ type Robot = {
     createdAt: string;
     stock: number;
     id: number;
+
   }
+
+// export default RobotType;
+    

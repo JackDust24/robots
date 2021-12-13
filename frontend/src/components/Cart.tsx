@@ -5,18 +5,19 @@ import { countNumberOfRobots, countTotalPrice } from "../utils/format";
 import CartItem from "./CartItem";
 import PropTypes from 'prop-types';
 import React from "react";
+import {RobotType} from "../model/RobotType"
 
-type Robot = {
-  name: string;
-  price: string;
-  image: string;
-  material: string;
-  createdAt: string;
-  stock: number;
-  id: number;
-}
+// type Robot = {
+//   name: string;
+//   price: string;
+//   image: string;
+//   material: string;
+//   createdAt: string;
+//   stock: number;
+//   id: number;
+// }
 
-const Cart: React.FC<{ cart: Robot[]; handleAddToCart: (robot: Robot) => void; handleRemoveFromCart: (robot: Robot) => void }> = (props) => {
+const Cart: React.FC<{ cart: RobotType[]; handleAddToCart: (robot: RobotType) => void; handleRemoveFromCart: (robot: RobotType) => void }> = (props) => {
   const { cart, handleAddToCart, handleRemoveFromCart } = props;
   const numberOfRobots = countNumberOfRobots(cart);
   const totalPriceOfRobots = countTotalPrice(cart);
@@ -25,7 +26,7 @@ const Cart: React.FC<{ cart: Robot[]; handleAddToCart: (robot: Robot) => void; h
     <div className="cart-container" style={{ border: "solid", borderWidth: `thin`, marginTop: `10px`, padding: `5px` }}>
       <h2 className="text-center">Cart</h2>
       {cart.length === 0 && <div>Cart is empty</div>}
-      {cart.map((robot: Robot) => (
+      {cart.map((robot: RobotType) => (
         <CartItem
           robot={robot}
           key={robot.id}

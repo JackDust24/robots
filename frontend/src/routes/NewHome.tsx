@@ -12,32 +12,34 @@ import Cart from "../components/Cart";
 import MaterialSearch from "../components/MaterialSearch";
 import ReactPaginate from "react-paginate";
 import RobotList from "../components/RobotList";
+import { RobotType } from "../model/RobotType"
 import { callAPI } from "../api/helper";
 
-type Robot = {
-    name: string;
-    price: string;
-    image: string;
-    material: string;
-    createdAt: string;
-    stock: number;
-    id: number;
-}
+// type Robot = {
+//     name: string;
+//     price: string;
+//     image: string;
+//     material: string;
+//     createdAt: string;
+//     stock: number;
+//     id: number;
+// }
 
 const robotsPerPage: number = 15;
+// let Robot = RobotType;
+
 
 const NewHome: React.FC = () => {
-
     // Initial robot data and for cart
-    const [robotData, setRobotData] = useState<Robot[]>([]);
-    const [cart, setCart] = useState<Robot[]>([]);
+    const [robotData, setRobotData] = useState<RobotType[]>([]);
+    const [cart, setCart] = useState<RobotType[]>([]);
     const [fetchingAPIData, setFetchingAPIData] = useState<boolean>(false);
     // For Filtering
     const [materials, setMaterials] = useState<string[]>([]);
-    const [filteredRobots, setFilteredRobots] = useState<Robot[]>([]);
+    const [filteredRobots, setFilteredRobots] = useState<RobotType[]>([]);
 
     // For Paginated Robots
-    const [currentRobots, setCurrentRobots] = useState<Robot[]>([]);
+    const [currentRobots, setCurrentRobots] = useState<RobotType[]>([]);
     const [pageCount, setPageCount] = useState<number>(0);
     const [robotOffset, setRobotOffset] = useState<number>(0);
 
@@ -89,7 +91,7 @@ const NewHome: React.FC = () => {
 
     // Robot being added to cart
     // @ts-ignore
-    const handleAddToCart = (robot: Robot) => {
+    const handleAddToCart = (robot: RobotType) => {
         console.log("handleAddToCart ", robot)
 
         // Find if selected Robot is in the Cart list and the selected Robot from the Robot list
@@ -187,7 +189,7 @@ const NewHome: React.FC = () => {
 
     // const handleRemoveFromCart: React.FC<{handleRemoveFromCart: (robot: Robot) => void }>
     // @ts-ignore
-    const handleRemoveFromCart = (robot: Robot) => {
+    const handleRemoveFromCart = (robot: RobotType) => {
         console.log("Handle Remove from car", robot)
         // Find if selected Robot is in the Cart list and the selected Robot from the Robot list
         const checkCartForItem = cart.find(
@@ -302,7 +304,6 @@ const NewHome: React.FC = () => {
                                 handleSelectMaterial={handleSelectMaterial}
                                 handleMaterialReset={handleMaterialReset}
                             />
-
                             {/*Robots Column*/}
                             <div className="productArea">
                                 <RobotList

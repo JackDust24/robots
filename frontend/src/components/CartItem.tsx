@@ -9,6 +9,7 @@ import CSS from 'csstype';
 import NoImage from "../assets/images/noimage.png";
 import PropTypes from 'prop-types';
 import React from "react";
+import {RobotType} from "../model/RobotType";
 import { formatPrice } from "../utils/format";
 
 type Robot = {
@@ -85,7 +86,7 @@ const CardButtonPlustyle: CSS.Properties = {
   right: `25px`,
 };
 
-const CartItem: React.FC<{ robot: Robot; handleAddToCart: (robot: Robot) => void; handleRemoveFromCart: (robot: Robot) => void }> = (props) => {
+const CartItem: React.FC<{ robot: RobotType; handleAddToCart: (robot: RobotType) => void; handleRemoveFromCart: (robot: RobotType) => void }> = (props) => {
   const { robot, handleAddToCart, handleRemoveFromCart } = props;
 
   return (

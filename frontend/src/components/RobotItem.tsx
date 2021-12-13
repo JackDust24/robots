@@ -5,16 +5,17 @@ import CSS from 'csstype';
 import NoImage from "../assets/images/noimage.png";
 import PropTypes from 'prop-types';
 import React from "react";
+import { RobotType } from "../model/RobotType";
 
-type Robot = {
-  name: string;
-  price: string;
-  image: string;
-  material: string;
-  createdAt: string;
-  stock: number;
-  id: number;
-}
+// type Robot = {
+//   name: string;
+//   price: string;
+//   image: string;
+//   material: string;
+//   createdAt: string;
+//   stock: number;
+//   id: number;
+// }
 
 const ImageStyles: CSS.Properties = {
   width: `80%`,
@@ -65,7 +66,7 @@ const CardBodyStyle: CSS.Properties = {
   height: `160px`,
 };
 
-const RobotItem: React.FC<{ robot: Robot; handleAddToCart: (robot: Robot) => void }> = (props) => {
+const RobotItem: React.FC<{ robot: RobotType; handleAddToCart: (robot: RobotType) => void }> = (props) => {
   const { robot, handleAddToCart } = props;
 
   return (
