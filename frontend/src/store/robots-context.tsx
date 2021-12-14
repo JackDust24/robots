@@ -4,22 +4,14 @@ import {RobotType} from '../model/RobotType';
 
 // Set up the object
 type RobotsContextObject = {
-    robotDataItems: RobotType[];
-    currentRobotsItems: RobotType[];
-    filteredRobotsItems: RobotType[];
     cartItems: RobotType[];
-    setInitialData: (data: {}) => void;
     addToCart: (robot: RobotType) => void;
     removeFromCart: (robot: RobotType) => void;
   };
 
 // Set up the context
 export const RobotsContext = React.createContext<RobotsContextObject>({
-    robotDataItems: [],
-    currentRobotsItems: [],
-    filteredRobotsItems: [],
     cartItems: [],
-    setInitialData: (data: {}) => {},
     addToCart: (robot: RobotType) => {},
     removeFromCart: (robot: RobotType) => {}
   });
@@ -27,25 +19,7 @@ export const RobotsContext = React.createContext<RobotsContextObject>({
 
   const RobotsContextProvider: React.FC = (props) => {
    
-    const [robotData, setRobotData] = useState<RobotType[]>([]);
-    // For Filtering
-    const [filteredRobots, setFilteredRobots] = useState<RobotType[]>([]);
-    // For Paginated Robots
-    const [currentRobots, setCurrentRobots] = useState<RobotType[]>([]);
     const [cart, setCart] = useState<RobotType[]>([]);
-    const [pageCount, setPageCount] = useState<number>(0);
-
-
-    // @ts-ignore
-    const setInitialData = (data: any) => {
-        setRobotData(data)
-      }
-
-    const setUpCurrentRobotsPerPage = () => {
-        const endOffset: number = robotOffset + robotsPerPage;
-        setCurrentRobots(robotData.slice(robotOffset, endOffset));
-        setPageCount(Math.ceil(robotData.length / robotsPerPage));
-    };
 
     // Robot being added to cart
     // @ts-ignore
@@ -58,24 +32,6 @@ export const RobotsContext = React.createContext<RobotsContextObject>({
         );
         console.log("checkCartForItem ", checkCartForItem)
 
-        const checkRobotDataForItem = robotData.find(
-            (robotItem) => robotItem.id === robot.id
-        );
-        console.log("checkRobotDataForItem ", checkRobotDataForItem)
-
-        const checkCurrentRobotDataForItem = currentRobots.find(
-            (robotItem) => robotItem.id === robot.id
-        );
-        console.log("checkCurrentRobotDataForItem ", checkCurrentRobotDataForItem)
-        const checkFilteredDataForItem = filteredRobots.find(
-            (robotItem) => robotItem.id === robot.id
-        );
-        // Though unlikely to be called we will not add to cart if the stock is empty
-        // @ts-ignore
-        if (checkRobotDataForItem!.stock === 0) {
-            console.log("2");
-            return;
-        }
         // If robot is in the cart then increase the stock by one, otherwise creeate a new robot in cart
         if (checkCartForItem) {
             setCart(
@@ -96,39 +52,9 @@ export const RobotsContext = React.createContext<RobotsContextObject>({
                 setCart([...cart, { ...robot, stock: 1 }]);
             }
         }
-        const newRobotData = robotData.map((robotItem) =>
-            robotItem.id === robot.id
-                ? {
-                    ...checkRobotDataForItem!,
-                    stock: checkRobotDataForItem!.stock - 1,
-                }
-                : robotItem
-        )
-        setRobotData(newRobotData)
-        // This target would have to appear in this list too.
-        const newRobots = currentRobots.map((robotItem) =>
-            robotItem.id === robot.id
-                ? {
-                    ...checkCurrentRobotDataForItem!,
-                    stock: checkCurrentRobotDataForItem!.stock - 1,
-                }
-                : robotItem
-        )
-        setCurrentRobots(newRobots)
-        // We also want to update if we have filtered robots.
-        if (checkFilteredDataForItem) {
 
-            filteredRobots.map((robotItem) =>
-                robotItem.id === robot.id
-                    ? {
-                        ...checkFilteredDataForItem,
-                        stock: checkFilteredDataForItem.stock - 1,
-                    }
-                    : robotItem
-            )
-            setFilteredRobots(filteredRobots);
-        }
     };
+
     // const handleRemoveFromCart: React.FC<{handleRemoveFromCart: (robot: Robot) => void }>
     // @ts-ignore
     const handleRemoveFromCart = (robot: RobotType) => {
@@ -137,15 +63,7 @@ export const RobotsContext = React.createContext<RobotsContextObject>({
         const checkCartForItem = cart.find(
             (robotCart) => robotCart.id === robot.id
         );
-        const checkRobotDataForItem = robotData.find(
-            (robotItem) => robotItem.id === robot.id
-        );
-        const checkCurrentRobotDataForItem = currentRobots.find(
-            (robotItem) => robotItem.id === robot.id
-        );
-        const checkFilteredDataForItem = filteredRobots.find(
-            (robotItem) => robotItem.id === robot.id
-        );
+
         // We can check if the item being removed is 1, then we can remove the robot from the cart altogether.
         //  If not, then we just decrease the stock count by one.
 
@@ -162,50 +80,9 @@ export const RobotsContext = React.createContext<RobotsContextObject>({
 
             setCart(newCart)
         }
-        // We then increase the robot count by one in the robot list.
-        const newRobotData = robotData.map((robotItem) =>
-            robotItem.id === robot.id
-                ? {
-                    ...checkRobotDataForItem!,
-                    stock: checkRobotDataForItem!.stock + 1,
-                }
-                : robotItem
-        )
-        setRobotData(newRobotData)
-        // This target would have to appear in this list too.
-        if (currentRobots) {
-            const newRobots = currentRobots.map((robotItem) =>
-                robotItem.id === robot.id
-                    ? {
-                        ...checkCurrentRobotDataForItem!,
-                        stock: checkCurrentRobotDataForItem!.stock + 1,
-                    }
-                    : robotItem
-
-            )
-            setCurrentRobots(newRobots)
-        }
-        // We also want to update if we have filtered robots.
-        if (checkFilteredDataForItem) {
-            setFilteredRobots(
-                filteredRobots.map((robotItem) =>
-                    robotItem.id === robot.id
-                        ? {
-                            ...checkFilteredDataForItem,
-                            stock: checkFilteredDataForItem.stock + 1,
-                        }
-                        : robotItem
-                )
-            );
-        }
     };
 
-
-
     const contextValue: RobotsContextObject = {
-        robotDataItems: robotData,
-        currentRobotsItems: currentRobots,
-        filteredRobotsItems: filteredRobots,
         cartItems: cart,
         addToCart: handleAddToCart,
         removeFromCart: handleRemoveFromCart,

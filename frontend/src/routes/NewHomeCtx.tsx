@@ -31,18 +31,18 @@ const robotsPerPage: number = 15;
 
 
 const NewHome: React.FC = () => {
-    const robotsCtx = useContext(RobotsContext);
+    const {cartItems, addToCart, removeFromCart} = useContext(RobotsContext);
 
     // Initial robot data and for cart
-    // const [robotData, setRobotData] = useState<RobotType[]>([]);
+    const [robotData, setRobotData] = useState<RobotType[]>([]);
     // const [cart, setCart] = useState<RobotType[]>([]);
     const [fetchingAPIData, setFetchingAPIData] = useState<boolean>(false);
     // For Filtering
     const [materials, setMaterials] = useState<string[]>([]);
-    // const [filteredRobots, setFilteredRobots] = useState<RobotType[]>([]);
+    const [filteredRobots, setFilteredRobots] = useState<RobotType[]>([]);
 
     // For Paginated Robots
-    // const [currentRobots, setCurrentRobots] = useState<RobotType[]>([]);
+    const [currentRobots, setCurrentRobots] = useState<RobotType[]>([]);
     const [pageCount, setPageCount] = useState<number>(0);
     const [robotOffset, setRobotOffset] = useState<number>(0);
 
@@ -60,7 +60,7 @@ const NewHome: React.FC = () => {
             // console.log("data Data, ", data)
 
             // Retrieve the materials
-            robotsCtx.setInitialData(data);
+            setRobotData(data);
             setMaterials(listOfMaterials);
             // Set initial Current Robots per page
         })();
@@ -71,16 +71,16 @@ const NewHome: React.FC = () => {
         // populating the screen
         // console.log("robotData robotData, ", robotData)
 
-        if (robotsCtx.robotDataItems.length > 0) {
+        if (robotData.length > 0) {
             setFetchingAPIData(false);
             setUpCurrentRobotsPerPage();
         }
-    }, [robotsCtx.robotDataItems]);
+    }, [robotData]);
 
 
     useEffect(() => {
         // Only run this method if the robot data has already been populated:
-        if (robotsCtx.robotDataItems.length > 0) {
+        if (robotData.length > 0) {
             setUpCurrentRobotsPerPage();
         }
     }, [robotOffset, robotsPerPage]);
@@ -98,10 +98,6 @@ const NewHome: React.FC = () => {
         console.log("handleAddToCart ", robot)
 
         // Find if selected Robot is in the Cart list and the selected Robot from the Robot list
-        const checkCartForItem = cart.find(
-            (robotCart) => robotCart.id === robot.id
-        );
-        console.log("checkCartForItem ", checkCartForItem)
 
         const checkRobotDataForItem = robotData.find(
             (robotItem) => robotItem.id === robot.id
@@ -127,29 +123,7 @@ const NewHome: React.FC = () => {
         }
 
         // If robot is in the cart then increase the stock by one, otherwise creeate a new robot in cart
-        if (checkCartForItem) {
-            console.log("3");
-
-            setCart(
-                cart.map((robotCart) =>
-                    robotCart.id === robot.id
-                        ? { ...checkCartForItem, stock: checkCartForItem.stock + 1 }
-                        : robotCart
-                )
-            );
-        } else {
-            console.log("4");
-
-            // Check Cart to see if more than 5 types exist
-            if (cart.length > 4) {
-                alert(
-                    "You have reached the maximum number of Robots allowed for adding to the cart"
-                );
-                return;
-            } else {
-                setCart([...cart, { ...robot, stock: 1 }]);
-            }
-        }
+       addToCart(robot)
 
         const newRobotData = robotData.map((robotItem) =>
             robotItem.id === robot.id
@@ -194,10 +168,6 @@ const NewHome: React.FC = () => {
     // @ts-ignore
     const handleRemoveFromCart = (robot: RobotType) => {
         console.log("Handle Remove from car", robot)
-        // Find if selected Robot is in the Cart list and the selected Robot from the Robot list
-        const checkCartForItem = cart.find(
-            (robotCart) => robotCart.id === robot.id
-        );
         const checkRobotDataForItem = robotData.find(
             (robotItem) => robotItem.id === robot.id
         );
@@ -209,20 +179,8 @@ const NewHome: React.FC = () => {
         );
         // We can check if the item being removed is 1, then we can remove the robot from the cart altogether.
         //  If not, then we just decrease the stock count by one.
+        removeFromCart(robot);
 
-        if (checkCartForItem!.stock === 1) {
-            // Use filter to remove it from the cart
-            setCart(cart.filter((robotCart) => robotCart.id !== robot.id));
-        } else {
-
-            const newCart = cart.map((robotCart) =>
-                robotCart.id === robot.id
-                    ? { ...checkCartForItem!, stock: checkCartForItem!.stock - 1 }
-                    : robotCart
-            )
-
-            setCart(newCart)
-        }
         // We then increase the robot count by one in the robot list.
         const newRobotData = robotData.map((robotItem) =>
             robotItem.id === robot.id
@@ -323,7 +281,7 @@ const NewHome: React.FC = () => {
                 {/*Cart Column*/}
                 <div className="cartArea col-sm-6 col-md-3">
                     <Cart
-                        cart={cart}
+                        cart={cartItems}
                         handleAddToCart={handleAddToCart}
                         handleRemoveFromCart={handleRemoveFromCart}
                     />
